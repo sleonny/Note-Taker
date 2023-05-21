@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const uuid = require("uuid");
 
-const PORT = 3001;
+const PORT = 5500;
 
 const app = express();
 
@@ -14,17 +14,12 @@ app.use(express.static("public"));
 
 app.get("/", (req, res) => res.send("Navigate to /send or /routes"));
 
-app.get("/notes", (req, res) =>
-  res.sendFile(path.join(__dirname, "public/notes.html"))
-);
+const apiRoutes = require("./routes/apiRoutes");
+const htmlRoutes = require("./routes/htmlRoutes");
 
-app.get("/routes", (req, res) =>
-  res.sendFile(path.join(__dirname, "public/index.html"))
-);
-
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+app.use("/api", apiRoutes);
+app.use("/", htmlRoutes);
 
 app.listen(PORT, () => {
-  console.log("Server Listening @ Port 3001");
+  console.log("Server Listening @ Port 5500");
 });
