@@ -19,11 +19,11 @@ app.get("/notes", (req, res) =>
 );
 
 app.get("/routes", (req, res) =>
-  res.sendFile(path.join(__dirname, "public/routes.html"))
+  res.sendFile(path.join(__dirname, "public/index.html"))
 );
 
 require("./routes/apiRoutes")(app);
-require("/routes/htmlRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
 app.listen(PORT, () => {
   console.log("Server Listening @ Port 3001");
