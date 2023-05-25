@@ -3,6 +3,9 @@ const path = require("path");
 const fs = require("fs");
 const uuid = require("uuid");
 
+const apiRoutes = require("./routes/apiRoutes");
+const htmlRoutes = require("./routes/htmlRoutes");
+
 const PORT = 5500;
 
 const app = express();
@@ -13,9 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => res.send("Navigate to /send or /routes"));
-
-const apiRoutes = require("./routes/apiRoutes");
-const htmlRoutes = require("./routes/htmlRoutes");
 
 app.use("/api", apiRoutes);
 app.use("/", htmlRoutes);
