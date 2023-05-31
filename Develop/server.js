@@ -16,7 +16,7 @@ app.use(express.static(__dirname + "/public"));
 
 app.get("/", (req, res) => res.send("Navigate to /send or /routes"));
 
-app.use("/api", apiRoutes);
+app.use("/notes", apiRoutes);
 app.use("/", htmlRoutes);
 
 app.listen(PORT, () => {
