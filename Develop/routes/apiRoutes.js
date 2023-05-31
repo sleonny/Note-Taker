@@ -4,24 +4,53 @@ const uuid = require("uuid");
 const express = require("express");
 const app = express();
 
+app.use(express.json()); // Add this line to parse JSON data in the request body
+
 app.get("/notes", (req, res) => {
-  res.sendFile(path.join(__dirname, "../db/db.json"));
+  fs.readFile(path.join(__dirname, "../db/db.json"), "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      return res
+        .status(500)
+        .json({ error: "Failed to read notes from the file." });
+    }
+    const notes = JSON.parse(data);
+    res.json(notes);
+  });
 });
 
 app.post("/notes", (req, res) => {
-  let db = fs.readFileSync(path.join(__dirname, "../db/db.json"));
-  db = JSON.parse(db);
+  fs.readFile(path.join(__dirname, "../db/db.json"), "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      return res
+        .status(500)
+        .json({ error: "Failed to read notes from the file." });
+    }
+    const notes = JSON.parse(data);
 
-  let newNote = {
-    title: req.body.title,
-    text: req.body.text,
-    id: uuid.v4(),
-  };
+    const newNote = {
+      title: req.body.title,
+      text: req.body.text,
+      id: uuid.v4(),
+    };
 
-  db.push(newNote);
-  fs.writeFileSync(path.join(__dirname, "../db/db.json"), JSON.stringify(db));
+    notes.push(newNote);
 
-  res.json(db);
+    fs.writeFile(
+      path.join(__dirname, "../db/db.json"),
+      JSON.stringify(notes),
+      (err) => {
+        if (err) {
+          console.error(err);
+          return res
+            .status(500)
+            .json({ error: "Failed to write notes to the file." });
+        }
+        res.json(notes);
+      }
+    );
+  });
 });
 
 module.exports = app;
