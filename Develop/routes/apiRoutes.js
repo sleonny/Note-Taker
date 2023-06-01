@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const { stringify } = require("querystring");
-const uuid = require("uuid");
+const { v4: uuidv4 } = require("uuid");
 
 const router = express.Router();
 
@@ -34,7 +34,7 @@ router.post("/notes", (req, res) => {
       const newNotes = {
         title,
         text,
-        id: uuid(),
+        id: uuidv4(),
       };
       notes.push(newNotes);
       fs.writeFile(
