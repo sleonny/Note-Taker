@@ -14,9 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
-app.get("/", (req, res) => res.send("Navigate to /send or /routes"));
+app.get("/", (req, res) => res.send("/"));
 
-app.use("/notes", apiRoutes);
+app.use("/api", apiRoutes);
 app.use("/", htmlRoutes);
 
 app.listen(PORT, () => {
