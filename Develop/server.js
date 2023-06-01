@@ -5,7 +5,7 @@ const uuid = require("uuid");
 
 const app = express();
 
-const PORT =  process.env.PORT || 5500;
+const PORT = process.env.PORT || 5500;
 
 const apiRoutes = require("./routes/apiRoutes");
 const htmlRoutes = require("./routes/htmlRoutes");
