@@ -16,7 +16,8 @@ Note Taker was created to quickly record notes and save them for later review.  
 
 ## Demonstration
 
-<iframe src="https://drive.google.com/file/d/13qlamqifzWs_hg5RBPfR5YBKT3x5Sdho/preview" width="640" height="480"></iframe>
+[![Video](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
+
 
 ## Installation
 
