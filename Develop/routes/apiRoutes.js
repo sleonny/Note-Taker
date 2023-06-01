@@ -51,23 +51,35 @@ router.post("/notes", (req, res) => {
   );
 });
 
-router.delete("/notes/:id", (req, res) => {
+router.delete("/api/notes/:id", (req, res) => {
   const noteId = req.params.id;
+
   fs.readFile(
     path.resolve(__dirname, "../db/db.json"),
     "utf-8",
     (err, data) => {
       if (err) {
         console.log(err);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
       }
-      const notes = JSON.parse(data);
+
+      let notes = JSON.parse(data);
       const filteredNotes = notes.filter((note) => note.id !== noteId);
+
+      if (notes.length === filteredNotes.length) {
+        res.status(404).json({ error: "Note not found" });
+        return;
+      }
+
       fs.writeFile(
         path.resolve(__dirname, "../db/db.json"),
         JSON.stringify(filteredNotes),
         (err, data) => {
           if (err) {
             console.log(err);
+            res.status(500).json({ error: "Internal Server Error" });
+            return;
           }
           res.json({ message: "Note deleted successfully" });
         }
