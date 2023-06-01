@@ -51,4 +51,29 @@ router.post("/notes", (req, res) => {
   );
 });
 
+router.delete("/notes/:id", (req, res) => {
+  const noteId = req.params.id;
+  fs.readFile(
+    path.resolve(__dirname, "../db/db.json"),
+    "utf-8",
+    (err, data) => {
+      if (err) {
+        console.log(err);
+      }
+      const notes = JSON.parse(data);
+      const filteredNotes = notes.filter((note) => note.id !== noteId);
+      fs.writeFile(
+        path.resolve(__dirname, "../db/db.json"),
+        JSON.stringify(filteredNotes),
+        (err, data) => {
+          if (err) {
+            console.log(err);
+          }
+          res.json({ message: "Note deleted successfully" });
+        }
+      );
+    }
+  );
+});
+
 module.exports = router;
